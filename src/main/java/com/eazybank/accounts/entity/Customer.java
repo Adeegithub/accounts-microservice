@@ -15,7 +15,10 @@ public class Customer extends BaseEntity {
     @Column(name = "customer_id")
     private long customerId;
 
+    //At column annotation is not needed unless otherwise the column name is different.
     private String name;
+
+    //At column annotation is not needed unless otherwise the column name is different.
     private String email;
 
     @Column(name = "mobile_number")
