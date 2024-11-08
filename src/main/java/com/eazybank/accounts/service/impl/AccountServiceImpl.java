@@ -1,10 +1,13 @@
 package com.eazybank.accounts.service.impl;
 
 import com.eazybank.accounts.constants.AccountsConstants;
+import com.eazybank.accounts.dto.AccountsDto;
 import com.eazybank.accounts.dto.CustomerDto;
 import com.eazybank.accounts.entity.Accounts;
 import com.eazybank.accounts.entity.Customer;
 import com.eazybank.accounts.exception.CustomerAlreadyExistException;
+import com.eazybank.accounts.exception.ResourceNotFoundException;
+import com.eazybank.accounts.mapper.AccountsMapper;
 import com.eazybank.accounts.mapper.CustomerMapper;
 import com.eazybank.accounts.repository.AccountsRepository;
 import com.eazybank.accounts.repository.CustomerRepository;
@@ -41,7 +44,7 @@ public class AccountServiceImpl implements IAccountService {
 
     private Accounts createNewAccount(Customer customer){
         Accounts newAccount = new Accounts();
-        newAccount.setCustomerId(newAccount.getCustomerId());
+        newAccount.setCustomerId(customer.getCustomerId());
         long randomAccNumber = 1000000000L + new Random().nextInt(900000000);
 
         newAccount.setAccountNumber(randomAccNumber);
@@ -52,5 +55,20 @@ public class AccountServiceImpl implements IAccountService {
         newAccount.setCreatedBy("Adeesha");
 
         return newAccount;
+    }
+
+    @Override
+    public CustomerDto fetchAccount(String mobileNumber) {
+        Customer customer = customerRepository.findByMobileNumber(mobileNumber).orElseThrow(
+                ()-> new ResourceNotFoundException("Customer","mobileNumber",mobileNumber)
+        );
+
+        Accounts accounts = accountsRepository.findByCustomerId(customer.getCustomerId()).orElseThrow(
+                ()-> new ResourceNotFoundException("Account","customerId",Long.toString(customer.getCustomerId()))
+        );
+
+        CustomerDto customerDto = CustomerMapper.mapToCustomerDto(customer, new CustomerDto());
+        customerDto.setAccountsDto(AccountsMapper.mapToAccountsDTO(accounts, new AccountsDto()));
+        return customerDto;
     }
 }
