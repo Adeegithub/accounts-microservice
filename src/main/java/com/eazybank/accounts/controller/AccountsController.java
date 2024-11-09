@@ -2,9 +2,12 @@ package com.eazybank.accounts.controller;
 
 import com.eazybank.accounts.constants.AccountsConstants;
 import com.eazybank.accounts.dto.CustomerDto;
+import com.eazybank.accounts.dto.ErrorResponseDto;
 import com.eazybank.accounts.dto.ResponseDto;
 import com.eazybank.accounts.service.IAccountService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -77,7 +80,10 @@ public class AccountsController {
             ),
             @ApiResponse(
                     responseCode = "500",
-                    description = "HTTP Status Internal Server Error"
+                    description = "HTTP Status Internal Server Error",
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class)
+                    )
             )
     })
     @PutMapping("/update")
