@@ -5,6 +5,12 @@ I'm developing a project to demonstrate microservices architecture using SpringB
 
 **This repo is for the accounts service.**
 
+You can navigate to the other services using the following links.
+
+1. Accounts Service -> (This Repo)
+2. Cards Service -> 
+3. Loan Service -> https://github.com/Adeegithub/loans-microservice
+
 Given below is a diagram to show the high level architecture.
 <img width="597" alt="Screenshot 2024-11-08 at 5 23 01 PM" src="https://github.com/user-attachments/assets/086d9646-5645-442e-b6f1-b63f62fac843">
 
